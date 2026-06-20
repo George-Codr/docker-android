@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: Build Docker Image
         run: |
-          docker build -t react-native-community/react-native .
-          docker run --rm --name rn-env react-native-community/react-native /bin/sh -c "npx envinfo"
+          docker build -t bolangocuyen/docker-android .
+          docker run --rm --name rn-env bolangocuyen/docker-android /bin/sh -c "npx envinfo"
       - name: Checkout React Native
         run: git clone https://github.com/facebook/react-native.git
       - name: Build React Native
@@ -26,11 +26,11 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: Build Docker Image
         run: |
-          docker build -t react-native-community/react-native .
-          docker run --rm --name rn-env react-native-community/react-native /bin/sh -c "npx envinfo"
+          docker build -t bolangocuyen/docker-android .
+          docker run --rm --name rn-env bolangocuyen/docker-android /bin/sh -c "npx envinfo"
       - name: Checkout React Native
         run: git clone https://github.com/facebook/react-native.git
       - name: Create reports directory
@@ -40,7 +40,7 @@ jobs:
         run: |
           docker run --rm --ulimit nofile=10240 -v "$(pwd)/scripts/":/scripts -v "$(pwd)/react-native/":/react-native -v "$(pwd)/fantom-reports/":/react-native/private/react-native-fantom/build/reports -w /react-native react-native-community/react-native /bin/sh -c "/scripts/test-react-native-fantom.sh"
       - name: Upload Fantom build reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()
         with:
           name: fantom-build-reports
