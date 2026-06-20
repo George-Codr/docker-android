@@ -14,7 +14,7 @@ ARG ANDROID_TOOLS_VERSION=37.0.0
 ARG NDK_VERSION=27.3.13750724
 ARG NODE_VERSION=24.17.0
 ARG WATCHMAN_VERSION=4.9.0
-ARG CMAKE_VERSION=4.3.3
+ARG CMAKE_VERSION=4.1
 
 # set default environment variables, please don't remove old env for compatibilty issue
 ENV ADB_INSTALL_TIMEOUT=10
@@ -29,9 +29,10 @@ ENV PATH=${CMAKE_BIN_PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HO
 # Set the encoding to resolve a known character encoding issue with decompressing tar.gz files in containers
 # via Gradle: https://github.com/gradle/gradle/issues/23391#issuecomment-1878979127
 ENV LC_ALL=C.UTF8
+RUN apt install sudo
 
 # Install system dependencies
-RUN apt update -qq && apt install -qq -y --no-install-recommends \
+RUN sudo apt update -qq && apt install -qq -y --no-install-recommends \
         apt-transport-https \
         bc \
         bison \
