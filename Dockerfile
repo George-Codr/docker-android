@@ -6,25 +6,24 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # set default build arguments
 # https://developer.android.com/studio#command-tools
-ARG SDK_VERSION=commandlinetools-linux-11076708_latest.zip
+ARG SDK_VERSION=commandlinetools-linux-14742923_latest.zip
 # Android 17 (API 37) ships as a versioned platform package "platforms;android-37.0"
 # (the new <api>.<minor> scheme, cf. android-36.1); plain "android-37" does not exist.
 ARG ANDROID_BUILD_VERSION=37.0
 ARG ANDROID_TOOLS_VERSION=37.0.0
-ARG NDK_VERSION=27.1.12297006
-ARG NODE_VERSION=22.14
+ARG NDK_VERSION=27.3.13750724
+ARG NODE_VERSION=24.17.0
 ARG WATCHMAN_VERSION=4.9.0
-ARG CMAKE_VERSION=3.30.5
+ARG CMAKE_VERSION=4.3.3
 
 # set default environment variables, please don't remove old env for compatibilty issue
 ENV ADB_INSTALL_TIMEOUT=10
-ENV ANDROID_HOME=/opt/android
+ENV ANDROID_HOME=/system
 ENV ANDROID_SDK_ROOT=${ANDROID_HOME}
-ENV ANDROID_NDK_HOME=${ANDROID_HOME}/ndk/$NDK_VERSION
+ENV ANDROID_NDK_HOME=${ANDROID_HOME}
 
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ENV CMAKE_BIN_PATH=${ANDROID_HOME}/cmake/$CMAKE_VERSION/bin
-
 ENV PATH=${CMAKE_BIN_PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/emulator:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools:${ANDROID_HOME}/tools/bin:${PATH}
 
 # Set the encoding to resolve a known character encoding issue with decompressing tar.gz files in containers
@@ -34,16 +33,23 @@ ENV LC_ALL=C.UTF8
 # Install system dependencies
 RUN apt update -qq && apt install -qq -y --no-install-recommends \
         apt-transport-https \
+        bc \
+        bison \
         curl \
         file \
+        flex \
         gcc \
         git \
         g++ \
         gnupg2 \
         libc++1-11 \
+        libelf-dev \
+        libssl-dev \
         libgl1 \
         libtcmalloc-minimal4 \
+        libzstd-dev \
         make \
+        m4 \
         openjdk-17-jdk-headless \
         openssh-client \
         patch \
@@ -55,8 +61,13 @@ RUN apt update -qq && apt install -qq -y --no-install-recommends \
         tzdata \
         unzip \
         sudo \
+        texinfo \
         ninja-build \
+        wget \
+        xz-utils \
         zip \
+        zstd \
+        zlib1g-dev \
         ccache \
         # Dev libraries requested by Hermes
         libicu-dev \
